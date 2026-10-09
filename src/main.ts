@@ -1,60 +1,72 @@
-import './style.css'
-import typescriptLogo from './assets/typescript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.ts'
+import "./style.css";
+import { projects } from "./projects.ts";
+import type { Project } from "./projects.ts";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${typescriptLogo}" class="framework" alt="TypeScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.ts</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+const pageTitle = "Jenny Wei — Portfolio";
+const introduction = "Hello, this is my portfolio where I demo some projects~";
 
-<div class="ticks"></div>
+const link = (href: string, label: string): HTMLAnchorElement => {
+  const url = new URL(href);
+  if (url.protocol !== "https:" && url.protocol !== "http:") {
+    throw new Error(`Unsupported link: ${href}`);
+  }
+  const anchor = document.createElement("a");
+  anchor.href = url.href;
+  anchor.target = "_blank";
+  anchor.rel = "noopener noreferrer";
+  anchor.textContent = label;
+  return anchor;
+};
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://www.typescriptlang.org" target="_blank">
-          <img class="button-icon" src="${typescriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+const projectCard = (project: Project): HTMLLIElement => {
+  if (project.tags.length < 1 || project.tags.length > 4) {
+    throw new Error(`${project.name} must have 1 to 4 tags`);
+  }
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+  const item = document.createElement("li");
+  item.className = "project";
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+  const heading = document.createElement("h2");
+  heading.textContent = project.name;
+
+  const summary = document.createElement("p");
+  summary.textContent = project.summary;
+
+  const tags = document.createElement("ul");
+  tags.className = "tags";
+  for (const tag of project.tags) {
+    const tagItem = document.createElement("li");
+    tagItem.textContent = tag;
+    tags.append(tagItem);
+  }
+
+  const links = document.createElement("div");
+  links.className = "links";
+  links.append(link(project.github, "GitHub"));
+  if (project.demo) links.append(link(project.demo, "Demo"));
+
+  item.append(heading, summary, tags, links);
+  return item;
+};
+
+const app = document.querySelector<HTMLDivElement>("#app");
+if (!app) throw new Error("Missing #app");
+
+const main = document.createElement("main");
+main.className = "wrap";
+
+const header = document.createElement("header");
+const title = document.createElement("h1");
+title.textContent = pageTitle;
+const intro = document.createElement("p");
+intro.className = "intro";
+intro.textContent = introduction;
+header.append(title, intro, link("https://github.com/Jenny-jw", "GitHub"));
+
+const list = document.createElement("ul");
+list.className = "projects";
+list.append(...projects.map(projectCard));
+
+main.append(header, list);
+app.replaceChildren(main);
+document.title = pageTitle;
