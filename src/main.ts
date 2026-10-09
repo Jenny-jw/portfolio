@@ -61,7 +61,13 @@ title.textContent = pageTitle;
 const intro = document.createElement("p");
 intro.className = "intro";
 intro.textContent = introduction;
-header.append(title, intro, link("https://github.com/Jenny-jw", "GitHub"));
+const profileLinks = document.createElement("div");
+profileLinks.className = "links";
+profileLinks.append(
+  link("https://github.com/Jenny-jw", "GitHub"),
+  link("https://www.linkedin.com/in/jenny-wei-38156b192/", "LinkedIn"),
+);
+header.append(title, intro, profileLinks);
 
 const list = document.createElement("ul");
 list.className = "projects";

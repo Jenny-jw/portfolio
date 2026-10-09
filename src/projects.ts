@@ -8,7 +8,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    name: "Personal blog",
+    name: "Tako's Note",
     summary:
       "Personal blog for notes on life, travel, and books. Comments are reviewed before they appear.",
     tags: ["MongoDB", "Express", "React", "Node.js"],
@@ -16,26 +16,26 @@ export const projects: Project[] = [
     demo: "http://takosnote.onrender.com/",
   },
   {
-    name: "assetManager",
+    name: "Asset Manager (ERP)",
     summary: "Asset dashboard and list, with access control for three roles",
     tags: ["TypeScript", "Python"],
     github: "https://github.com/Jenny-jw/assetManager",
   },
   {
-    name: "AI-image-classifier",
+    name: "AI Image Classifier",
     summary: "Classifies an uploaded image with pretrained MobileNetV2",
     tags: ["React", "FastAPI", "PyTorch", "MobileNetV2"],
     github: "https://github.com/Jenny-jw/AI-image-classifier",
   },
   {
-    name: "questionnaire",
+    name: "Questionnaire",
     summary:
       "Five question types. Admins manage forms with JWT. Invite links expire after seven days.",
     tags: ["TypeScript", "JWT"],
     github: "https://github.com/Jenny-jw/questionnaire",
   },
   {
-    name: "shortenUrl",
+    name: "Shorten URL",
     summary:
       "Turns a long URL into a short link that redirects to the original address",
     tags: ["Node.js", "Express", "MongoDB", "TypeScript"],
