@@ -37,6 +37,12 @@ h1 {
   border: 1px solid #4a4a4a;
   border-radius: 0.75rem;
   padding: 1rem 1.1rem;
+  background: #333333;
+  transition: background 0.15s ease;
+}
+
+.project:hover {
+  background: #262626;
 }
 
 .project h2 {
